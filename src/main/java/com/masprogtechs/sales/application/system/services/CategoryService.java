@@ -8,6 +8,8 @@ import com.masprogtechs.sales.application.system.dto.CategoryDTO;
 import com.masprogtechs.sales.application.system.exception.UnauthorizedAccessException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -20,28 +22,31 @@ public class CategoryService {
     private ModelMapper modelMapper;
 
     @Autowired
-    private CategoryRepository productRepository;
+    private CategoryRepository categoryRepository;
 
     @Autowired
     private UserRepository userRepository;
 
 
-    public CategoryDTO registerProduct(CategoryDTO categoryDTO, String loggedInUsername) {
-        User registeredBy = userRepository.findByUsername(loggedInUsername);
+    public CategoryDTO registerCategory(CategoryDTO categoryDTO) {
+        if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+            User registeredBy = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 
-        List<String> allowedRoles = Arrays.asList("ADMIN", "OPERATOR");
+            List<String> allowedRoles = Arrays.asList("ADMIN", "OPERATOR");
 
-        if (registeredBy != null && allowedRoles.contains(registeredBy.getRole().name())) {
-            Category category = modelMapper.map(categoryDTO, Category.class);
-            category.setRegisteredBy(registeredBy);
+            if (registeredBy != null && allowedRoles.contains(registeredBy.getRole().name())) {
+                Category category = modelMapper.map(categoryDTO, Category.class);
+                category.setRegisteredBy(registeredBy);
 
-            Category savedProduct = productRepository.save(category);
+                Category savedCategory = categoryRepository.save(category);
 
-            return modelMapper.map(savedProduct, CategoryDTO.class);
+                return modelMapper.map(savedCategory, CategoryDTO.class);
+            } else {
+                throw new UnauthorizedAccessException("User is not authorized to register a product.");
+            }
         } else {
-            throw new UnauthorizedAccessException("User is not authorized to register a product.");
+            throw new AuthenticationCredentialsNotFoundException("User is not authenticated.");
         }
     }
-
 
 }
