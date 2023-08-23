@@ -1,5 +1,6 @@
 package com.masprogtechs.sales.application.system.services;
 
+import com.masprogtechs.sales.application.system.domain.entities.User;
 import com.masprogtechs.sales.application.system.domain.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +16,13 @@ public class AuthService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username);
+
+        if (user != null) {
+            return user; // Return the user entity directly, as it implements UserDetails
+        } else {
+            throw new UsernameNotFoundException("User not found");
+        }
     }
+
 }

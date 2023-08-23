@@ -1,8 +1,10 @@
 package com.masprogtechs.sales.application.system.dto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class AuthRequestDTO {
 
     private String username;
