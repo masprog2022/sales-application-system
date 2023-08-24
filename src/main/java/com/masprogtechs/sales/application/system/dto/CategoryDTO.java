@@ -1,5 +1,6 @@
 package com.masprogtechs.sales.application.system.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.masprogtechs.sales.application.system.domain.entities.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -17,15 +18,16 @@ public class CategoryDTO {
     private Long id;
     private String name;
     private String description;
-    private User registeredBy;
+    @JsonProperty("registeredBy")
+    private UserDTO registeredBy;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public CategoryDTO(Long id, String name, String description, User registeredBy, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public CategoryDTO(Long id, String name, String description, UserDTO registeredBy, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.registeredBy = registeredBy;
+        this.registeredBy = new UserDTO(registeredBy.getName(), registeredBy.getUsername(), registeredBy.getEmail(), registeredBy.getPhone());
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
