@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,6 +38,8 @@ public class CategoryService {
             if (registeredBy != null && allowedRoles.contains(registeredBy.getRole().name())) {
                 Category category = modelMapper.map(categoryDTO, Category.class);
                 category.setRegisteredBy(registeredBy);
+                category.setCreatedAt(LocalDateTime.now());
+                category.setUpdatedAt(LocalDateTime.now());
 
                 Category savedCategory = categoryRepository.save(category);
 
