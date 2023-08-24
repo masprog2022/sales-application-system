@@ -70,6 +70,13 @@ public class User implements UserDetails {
         this.role = role;
     }
 
+    public User(String name, String username, String email, String phone) {
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.phone = phone;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(this.role == Role.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));

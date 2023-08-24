@@ -1,5 +1,6 @@
 package com.masprogtechs.sales.application.system.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -46,4 +47,6 @@ public class Category {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
+
+
 }
