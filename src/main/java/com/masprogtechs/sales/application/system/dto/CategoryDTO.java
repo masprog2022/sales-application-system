@@ -18,16 +18,15 @@ public class CategoryDTO {
     private Long id;
     private String name;
     private String description;
-    @JsonProperty("registeredBy")
-    private UserDTO registeredBy;
+    private UserReducedDTO registeredBy;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public CategoryDTO(Long id, String name, String description, UserDTO registeredBy, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public CategoryDTO(Long id, String name, String description, UserReducedDTO registeredBy, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.registeredBy = new UserDTO(registeredBy.getName(), registeredBy.getUsername(), registeredBy.getEmail(), registeredBy.getPhone());
+        this.registeredBy = registeredBy;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
