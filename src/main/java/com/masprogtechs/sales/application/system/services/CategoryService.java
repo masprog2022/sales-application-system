@@ -5,6 +5,7 @@ import com.masprogtechs.sales.application.system.domain.entities.User;
 import com.masprogtechs.sales.application.system.domain.repositories.CategoryRepository;
 import com.masprogtechs.sales.application.system.domain.repositories.UserRepository;
 import com.masprogtechs.sales.application.system.dto.CategoryDTO;
+import com.masprogtechs.sales.application.system.dto.UserReducedDTO;
 import com.masprogtechs.sales.application.system.exception.UnauthorizedAccessException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,13 @@ public class CategoryService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserService userService;
+
 
     public CategoryDTO registerCategory(CategoryDTO categoryDTO) {
         if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+
             User registeredBy = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 
             List<String> allowedRoles = Arrays.asList("ADMIN", "OPERATOR");
@@ -42,6 +47,9 @@ public class CategoryService {
                 category.setUpdatedAt(LocalDateTime.now());
 
                 Category savedCategory = categoryRepository.save(category);
+
+                UserReducedDTO registeredByReducedDTO = userService.mapToReducedDTO(registeredBy);
+                categoryDTO.setRegisteredBy(registeredByReducedDTO);
 
                 return modelMapper.map(savedCategory, CategoryDTO.class);
             } else {
