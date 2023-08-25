@@ -40,10 +40,6 @@ public class CategoryController {
             })
     public ResponseEntity<CategoryDTO> registerCategory(@RequestBody CategoryDTO categoryDTO) {
         CategoryDTO savedCategoryDTO = categoryService.registerCategory(categoryDTO);
-
-        // Exclude the password
-        savedCategoryDTO.getRegisteredBy().setPassword(null);
-
         return ResponseEntity.ok(savedCategoryDTO);
     }
 }
