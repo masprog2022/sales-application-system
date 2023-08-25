@@ -1,6 +1,5 @@
 package com.masprogtechs.sales.application.system.domain.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -9,6 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_category")
@@ -22,10 +22,12 @@ public class Category {
     @NotBlank(message = "Name category is required")
     private String name;
     private String description;
-
     @ManyToOne
     @JoinColumn(name = "registered_by")
     private User registeredBy;
+
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
