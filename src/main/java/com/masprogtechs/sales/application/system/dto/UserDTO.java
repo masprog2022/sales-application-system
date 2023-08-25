@@ -1,5 +1,7 @@
 package com.masprogtechs.sales.application.system.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.masprogtechs.sales.application.system.domain.enums.Role;
 import jakarta.persistence.Column;
 import lombok.Data;
@@ -33,4 +35,5 @@ public class UserDTO {
         this.password = password;
         this.role = role;
     }
+
 }

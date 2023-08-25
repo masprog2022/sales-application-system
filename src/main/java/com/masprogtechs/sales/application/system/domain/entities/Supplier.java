@@ -11,24 +11,26 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "tb_category")
+@Table(name = "tb_supplier")
 @Data
 @NoArgsConstructor
-public class Category {
+
+public class Supplier {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Name category is required")
+    @NotBlank(message = "Name supplier is required")
     private String name;
-    private String description;
+
+
     @ManyToOne
     @JoinColumn(name = "registered_by")
     private User registeredBy;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "supplier")
     private List<Product> products;
-
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -37,18 +39,23 @@ public class Category {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-
-
-    public Category(Long id, String name, String description,
-                    User registeredBy, LocalDateTime createdAt,
-                    LocalDateTime updatedAt) {
+    public Supplier(Long id, String name, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
-        this.description = description;
-        this.registeredBy = registeredBy;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
+    @PrePersist
+    protected void prePersist(){
+        if(this.createdAt == null)
+            createdAt = LocalDateTime.now();
+        if(this.updatedAt == null)
+            updatedAt = LocalDateTime.now();
+    }
+    @PreUpdate
+    protected void preUpdate(){
+        this.updatedAt = LocalDateTime.now();
+    }
 
 }

@@ -44,7 +44,7 @@ public class AuthController {
     @Autowired
     private TokenService tokenService;
 
-    @PostMapping("/login")
+    @PostMapping
     @Operation(summary = "Autenticar usuário", description = "Autenticar usuário",
             tags = {"Autenticação"},
             responses = {
