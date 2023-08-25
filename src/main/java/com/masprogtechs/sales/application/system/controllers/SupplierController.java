@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/supplier")
-@Tag(name = "Fornecedor", description = "Endpoints para gerenciar Fornecedores")
 public class SupplierController {
 
     @Autowired
