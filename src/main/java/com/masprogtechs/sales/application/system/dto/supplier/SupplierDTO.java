@@ -1,11 +1,9 @@
-package com.masprogtechs.sales.application.system.dto;
+package com.masprogtechs.sales.application.system.dto.supplier;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.NotBlank;
+import com.masprogtechs.sales.application.system.dto.user.UserDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 @Data

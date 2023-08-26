@@ -2,8 +2,8 @@ package com.masprogtechs.sales.application.system.services;
 
 import com.masprogtechs.sales.application.system.domain.entities.User;
 import com.masprogtechs.sales.application.system.domain.repositories.UserRepository;
-import com.masprogtechs.sales.application.system.dto.UserDTO;
-import com.masprogtechs.sales.application.system.dto.UserReducedDTO;
+import com.masprogtechs.sales.application.system.dto.user.UserDTO;
+import com.masprogtechs.sales.application.system.dto.user.UserReducedDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

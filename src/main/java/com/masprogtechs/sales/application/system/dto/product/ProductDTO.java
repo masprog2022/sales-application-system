@@ -1,6 +1,9 @@
-package com.masprogtechs.sales.application.system.dto;
+package com.masprogtechs.sales.application.system.dto.product;
 
 
+import com.masprogtechs.sales.application.system.dto.supplier.SupplierResponseDTO;
+import com.masprogtechs.sales.application.system.dto.category.CategoryResponseDTO;
+import com.masprogtechs.sales.application.system.dto.user.UserReducedDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

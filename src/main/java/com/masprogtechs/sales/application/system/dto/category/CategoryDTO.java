@@ -1,13 +1,8 @@
-package com.masprogtechs.sales.application.system.dto;
+package com.masprogtechs.sales.application.system.dto.category;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.masprogtechs.sales.application.system.domain.entities.User;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import com.masprogtechs.sales.application.system.dto.user.UserReducedDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 

@@ -7,6 +7,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_product")
@@ -31,6 +33,10 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "registered_by")
     private User registeredBy;
+
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Stock> stocks = new ArrayList<>();
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
