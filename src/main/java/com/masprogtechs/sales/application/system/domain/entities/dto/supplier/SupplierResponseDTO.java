@@ -1,4 +1,4 @@
-package com.masprogtechs.sales.application.system.dto.supplier;
+package com.masprogtechs.sales.application.system.domain.entities.dto.supplier;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

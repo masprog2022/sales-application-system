@@ -1,4 +1,4 @@
-package com.masprogtechs.sales.application.system.dto.auth;
+package com.masprogtechs.sales.application.system.domain.entities.dto.auth;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

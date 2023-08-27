@@ -1,7 +1,7 @@
 package com.masprogtechs.sales.application.system.controllers;
 
-import com.masprogtechs.sales.application.system.dto.category.CategoryDTO;
-import com.masprogtechs.sales.application.system.dto.user.UserDTO;
+import com.masprogtechs.sales.application.system.domain.entities.dto.category.CategoryDTO;
+import com.masprogtechs.sales.application.system.domain.entities.dto.user.UserDTO;
 import com.masprogtechs.sales.application.system.services.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

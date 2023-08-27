@@ -1,6 +1,6 @@
-package com.masprogtechs.sales.application.system.dto.category;
+package com.masprogtechs.sales.application.system.domain.entities.dto.category;
 
-import com.masprogtechs.sales.application.system.dto.user.UserReducedDTO;
+import com.masprogtechs.sales.application.system.domain.entities.dto.user.UserReducedDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

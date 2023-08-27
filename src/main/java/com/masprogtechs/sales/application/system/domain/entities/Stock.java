@@ -1,6 +1,8 @@
 package com.masprogtechs.sales.application.system.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.masprogtechs.sales.application.system.deserializer.LocalDateTimeDeserializer;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,7 +33,6 @@ public class Stock {
     private int quantity;
 
     private String lot;
-    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime expirationDate;
 
     @ManyToOne
