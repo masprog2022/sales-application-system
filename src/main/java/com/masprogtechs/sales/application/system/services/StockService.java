@@ -1,10 +1,10 @@
 package com.masprogtechs.sales.application.system.services;
 
-import com.masprogtechs.sales.application.system.domain.entities.Category;
-import com.masprogtechs.sales.application.system.domain.entities.User;
-import com.masprogtechs.sales.application.system.domain.repositories.CategoryRepository;
+import com.masprogtechs.sales.application.system.domain.entities.*;
+import com.masprogtechs.sales.application.system.domain.repositories.ProductRepository;
+import com.masprogtechs.sales.application.system.domain.repositories.StockRepository;
 import com.masprogtechs.sales.application.system.domain.repositories.UserRepository;
-import com.masprogtechs.sales.application.system.domain.entities.dto.category.CategoryDTO;
+import com.masprogtechs.sales.application.system.domain.entities.dto.stock.StockDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.user.UserReducedDTO;
 import com.masprogtechs.sales.application.system.exception.UnauthorizedAccessException;
 import org.modelmapper.ModelMapper;
@@ -18,13 +18,16 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class CategoryService {
+public class StockService {
 
     @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private StockRepository stockRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -32,8 +35,7 @@ public class CategoryService {
     @Autowired
     private UserService userService;
 
-
-    public CategoryDTO registerCategory(CategoryDTO categoryDTO) {
+    public StockDTO registerStock(StockDTO stockDTO) {
         if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
 
             User registeredBy = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -41,17 +43,22 @@ public class CategoryService {
             List<String> allowedRoles = Arrays.asList("ADMIN", "OPERATOR");
 
             if (registeredBy != null && allowedRoles.contains(registeredBy.getRole().name())) {
-                Category category = modelMapper.map(categoryDTO, Category.class);
-                category.setRegisteredBy(registeredBy);
-                category.setCreatedAt(LocalDateTime.now());
-                category.setUpdatedAt(LocalDateTime.now());
+                Stock stock = modelMapper.map(stockDTO, Stock.class);
+                stock.setRegisteredBy(registeredBy);
+                stock.setCreatedAt(LocalDateTime.now());
+                stock.setUpdatedAt(LocalDateTime.now());
 
-                Category savedCategory = categoryRepository.save(category);
+                if (stockDTO.getProduct() != null) {
+                    Product product = productRepository.findById(stockDTO.getProduct().getId()).orElse(null);
+                    stock.setProduct(product);
+                }
+
+                Stock savedStock = stockRepository.save(stock);
 
                 UserReducedDTO registeredByReducedDTO = userService.mapToReducedDTO(registeredBy);
-                categoryDTO.setRegisteredBy(registeredByReducedDTO);
+                stockDTO.setRegisteredBy(registeredByReducedDTO);
 
-                return modelMapper.map(savedCategory, CategoryDTO.class);
+                return modelMapper.map(savedStock, StockDTO.class);
             } else {
                 throw new UnauthorizedAccessException("User is not authorized to register a product.");
             }

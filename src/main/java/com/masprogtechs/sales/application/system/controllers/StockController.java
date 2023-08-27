@@ -1,8 +1,9 @@
 package com.masprogtechs.sales.application.system.controllers;
 
-import com.masprogtechs.sales.application.system.domain.entities.dto.product.ProductDTO;
+
+import com.masprogtechs.sales.application.system.domain.entities.dto.stock.StockDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.user.UserDTO;
-import com.masprogtechs.sales.application.system.services.ProductService;
+import com.masprogtechs.sales.application.system.services.StockService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -16,16 +17,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/products")
-@Tag(name = "Produto", description = "Endpoints para gerenciar produtos")
-public class ProductController {
+@RequestMapping("/api/v1/stocks")
+@Tag(name = "Estoque", description = "Endpoints para gerenciar estoques")
+public class StockController {
 
     @Autowired
-    private ProductService productService;
+    private StockService stockService;
 
     @PostMapping
-    @Operation(summary = "Salvar um Produto", description = "Salvar um produto",
-            tags = {"Produto"},
+    @Operation(summary = "Registar produto em estoque", description = "Registar produto em estoque",
+            tags = {"Estoque"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
                             content = @Content(schema = @Schema(implementation = UserDTO.class))
@@ -36,8 +37,8 @@ public class ProductController {
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
             })
-    public ResponseEntity<ProductDTO> registerProduct(@RequestBody ProductDTO productDTO) {
-        ProductDTO savedProductDTO = productService.registerProduct(productDTO);
-        return ResponseEntity.ok(savedProductDTO);
+    public ResponseEntity<StockDTO> registerStock(@RequestBody StockDTO stockDTO) {
+        StockDTO savedStockDTO = stockService.registerStock(stockDTO);
+        return ResponseEntity.ok(savedStockDTO);
     }
 }

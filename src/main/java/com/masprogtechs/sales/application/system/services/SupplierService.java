@@ -4,7 +4,7 @@ import com.masprogtechs.sales.application.system.domain.entities.Supplier;
 import com.masprogtechs.sales.application.system.domain.entities.User;
 import com.masprogtechs.sales.application.system.domain.repositories.SupplierRepository;
 import com.masprogtechs.sales.application.system.domain.repositories.UserRepository;
-import com.masprogtechs.sales.application.system.dto.SupplierDTO;
+import com.masprogtechs.sales.application.system.domain.entities.dto.supplier.SupplierDTO;
 import com.masprogtechs.sales.application.system.exception.UnauthorizedAccessException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

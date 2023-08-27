@@ -1,4 +1,4 @@
-package com.masprogtechs.sales.application.system.dto;
+package com.masprogtechs.sales.application.system.domain.entities.dto.category;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

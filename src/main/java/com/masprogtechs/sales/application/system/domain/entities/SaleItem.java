@@ -1,59 +1,54 @@
 package com.masprogtechs.sales.application.system.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Table(name = "tb_product")
+@Table(name = "sale_item")
 @Data
 @NoArgsConstructor
-public class Product {
-
+public class SaleItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String description;
+    @ManyToOne
+    private Stock stock;
+    private int quantity;
+    private BigDecimal subtotal;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
-
-    @ManyToOne
-    @JoinColumn(name = "supplier_id")
-    private Supplier supplier;
+    @JoinColumn(name = "sale_id", nullable = false)
+    private Sale sale;  // Adicione esta associação bidirecional
 
     @ManyToOne
     @JoinColumn(name = "registered_by")
     private User registeredBy;
 
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<Stock> stocks = new ArrayList<>();
-
     @CreatedDate
-    @Column(name = "created_at", updatable = false)
+    @Column(nullable = false, updatable = false)
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime createdAt;
 
-    @LastModifiedDate
-    @Column(name = "updated_at")
+    @LastModifiedBy
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime updatedAt;
 
-    public Product(Long id, String name, String description, Category category,
-                   Supplier supplier, User registeredBy, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public SaleItem(Long id, Stock stock, int quantity, BigDecimal subtotal,
+                    User registeredBy, Sale sale, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
-        this.name = name;
-        this.description = description;
-        this.category = category;
-        this.supplier = supplier;
+        this.stock = stock;
+        this.quantity = quantity;
+        this.subtotal = subtotal;
         this.registeredBy = registeredBy;
+        this.sale = sale;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
