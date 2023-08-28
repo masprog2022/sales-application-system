@@ -21,8 +21,8 @@ public class Cash {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private BigDecimal openingBalance;
-    private BigDecimal closingBalance;
-    private BigDecimal salesTotal;
+    private BigDecimal closingBalance = BigDecimal.ZERO;
+    private BigDecimal salesTotal = BigDecimal.ZERO;
 
     @OneToMany(mappedBy = "cash", cascade = CascadeType.ALL)
     private List<Sale> sales = new ArrayList<>(); // Vendas registradas durante o período do caixa
@@ -38,7 +38,4 @@ public class Cash {
     @LastModifiedDate
     @Column(name = "closing_date")
     private LocalDateTime closingDate;
-
-
-
 }
