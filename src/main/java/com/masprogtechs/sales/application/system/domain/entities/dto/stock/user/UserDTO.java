@@ -1,4 +1,4 @@
-package com.masprogtechs.sales.application.system.domain.entities.dto.user;
+package com.masprogtechs.sales.application.system.domain.entities.dto.stock.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

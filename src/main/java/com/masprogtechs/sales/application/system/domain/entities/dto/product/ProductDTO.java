@@ -3,7 +3,7 @@ package com.masprogtechs.sales.application.system.domain.entities.dto.product;
 
 import com.masprogtechs.sales.application.system.domain.entities.dto.supplier.SupplierResponseDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.category.CategoryResponseDTO;
-import com.masprogtechs.sales.application.system.domain.entities.dto.user.UserReducedDTO;
+import com.masprogtechs.sales.application.system.domain.entities.dto.stock.user.UserReducedDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

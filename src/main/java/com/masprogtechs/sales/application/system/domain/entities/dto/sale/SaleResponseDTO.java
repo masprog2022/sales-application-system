@@ -1,2 +1,5 @@
-package com.masprogtechs.sales.application.system.domain.entities.dto.sale;public class SaleResponseDTO {
+package com.masprogtechs.sales.application.system.domain.entities.dto.sale;
+
+public class SaleResponseDTO {
+
 }

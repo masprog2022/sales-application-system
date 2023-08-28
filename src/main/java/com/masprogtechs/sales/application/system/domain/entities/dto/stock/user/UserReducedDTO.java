@@ -1,4 +1,4 @@
-package com.masprogtechs.sales.application.system.domain.entities.dto.user;
+package com.masprogtechs.sales.application.system.domain.entities.dto.stock.user;
 
 import com.masprogtechs.sales.application.system.domain.enums.Role;
 import lombok.Data;
