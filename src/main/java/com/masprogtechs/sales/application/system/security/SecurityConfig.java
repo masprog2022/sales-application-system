@@ -33,7 +33,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/users").permitAll()
                         .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/categories", "/api/v1/products", "/api/v1/supplier", "/api/v1/stocks")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/categories", "/api/v1/products", "/api/v1/supplier", "/api/v1/stocks", "/api/v1/cash/**")
                         .hasAnyRole("ADMIN","OPERATOR")
                         .anyRequest().authenticated()
                 )
