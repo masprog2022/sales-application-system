@@ -9,12 +9,12 @@ import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
-public class CashDTO {
+public class CashRequestDTO {
 
     private BigDecimal openingBalance;
     private UserReducedDTO registeredBy;
 
-    public CashDTO(BigDecimal openingBalance, UserReducedDTO registeredBy) {
+    public CashRequestDTO(BigDecimal openingBalance, UserReducedDTO registeredBy) {
         this.openingBalance = openingBalance;
         this.registeredBy = registeredBy;
     }
