@@ -35,5 +35,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleUnauthorizedAccessException(UnauthorizedAccessException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
     }
+    @ExceptionHandler(IllegalStateErrorException.class)
+    public ResponseEntity<String> handleIllegalStateError(IllegalStateErrorException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
 
 }
