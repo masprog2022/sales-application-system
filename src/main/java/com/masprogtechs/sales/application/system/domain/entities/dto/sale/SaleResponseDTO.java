@@ -1,6 +1,6 @@
 package com.masprogtechs.sales.application.system.domain.entities.dto.sale;
 
-<<<<<<< HEAD
+
 import com.masprogtechs.sales.application.system.domain.entities.Cash;
 import com.masprogtechs.sales.application.system.domain.entities.dto.cash.CashReduceDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.saleItem.SaleItemResponseDTO;
@@ -39,8 +39,7 @@ public class SaleResponseDTO {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
-=======
-public class SaleResponseDTO {
 
->>>>>>> developer
+
+
 }
