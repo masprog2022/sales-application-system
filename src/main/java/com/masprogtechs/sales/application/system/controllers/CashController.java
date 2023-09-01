@@ -3,7 +3,6 @@ package com.masprogtechs.sales.application.system.controllers;
 import com.masprogtechs.sales.application.system.domain.entities.dto.cash.CashReduceDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.cash.CashRequestDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.cash.CashResponseDTO;
-import com.masprogtechs.sales.application.system.domain.entities.dto.user.UserDTO;
 import com.masprogtechs.sales.application.system.exception.UnauthorizedException;
 import com.masprogtechs.sales.application.system.exception.UserNotFoundException;
 import com.masprogtechs.sales.application.system.services.CashService;

@@ -3,7 +3,6 @@ package com.masprogtechs.sales.application.system.controllers;
 import com.masprogtechs.sales.application.system.domain.entities.dto.error.ErrorDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.sale.SaleRequestDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.sale.SaleResponseDTO;
-import com.masprogtechs.sales.application.system.domain.entities.dto.user.UserDTO;
 import com.masprogtechs.sales.application.system.exception.InsufficientStockException;
 import com.masprogtechs.sales.application.system.services.SaleService;
 import io.swagger.v3.oas.annotations.Operation;

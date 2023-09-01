@@ -1,7 +1,6 @@
 package com.masprogtechs.sales.application.system.controllers;
 
 import com.masprogtechs.sales.application.system.domain.entities.dto.supplier.SupplierDTO;
-import com.masprogtechs.sales.application.system.domain.entities.dto.stock.user.UserDTO;
 import com.masprogtechs.sales.application.system.services.SupplierService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

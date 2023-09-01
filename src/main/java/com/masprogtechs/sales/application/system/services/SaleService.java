@@ -5,8 +5,6 @@ import com.masprogtechs.sales.application.system.domain.entities.*;
 import com.masprogtechs.sales.application.system.domain.entities.dto.sale.SaleRequestDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.sale.SaleResponseDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.saleItem.SaleItemRequestDTO;
-import com.masprogtechs.sales.application.system.domain.entities.dto.stock.StockDTO;
-import com.masprogtechs.sales.application.system.domain.entities.dto.user.UserReducedDTO;
 import com.masprogtechs.sales.application.system.domain.repositories.SaleRepository;
 import com.masprogtechs.sales.application.system.domain.repositories.StockRepository;
 import com.masprogtechs.sales.application.system.domain.repositories.UserRepository;
