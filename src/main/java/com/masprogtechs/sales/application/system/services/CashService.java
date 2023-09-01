@@ -6,6 +6,7 @@ import com.masprogtechs.sales.application.system.domain.entities.dto.cash.CashRe
 import com.masprogtechs.sales.application.system.domain.entities.dto.cash.CashResponseDTO;
 import com.masprogtechs.sales.application.system.domain.repositories.CashRepository;
 import com.masprogtechs.sales.application.system.domain.repositories.UserRepository;
+import com.masprogtechs.sales.application.system.exception.IllegalStateErrorException;
 import com.masprogtechs.sales.application.system.exception.UnauthorizedException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,9 @@ public class CashService {
             List<String> allowedRoles = Arrays.asList("ADMIN", "OPERATOR");
 
             if (registeredBy != null && allowedRoles.contains(registeredBy.getRole().name())) {
+                if(isCashOpenForUser(registeredBy)){
+                    throw new IllegalStateErrorException("Usuário já tem o caixa aberto.");
+                }
                 Cash cashOpen = modelMapper.map(cashDTO, Cash.class);
                 cashOpen.setRegisteredBy(registeredBy);
                 cashOpen.setOpeningDate(LocalDateTime.now());
@@ -52,5 +56,9 @@ public class CashService {
         } else {
             throw new AuthenticationCredentialsNotFoundException("User is not authenticated.");
         }
+    }
+
+    public boolean isCashOpenForUser(User user){
+        return cashRepository.existsByRegisteredByAndClosingDateIsNull(user);
     }
 }
