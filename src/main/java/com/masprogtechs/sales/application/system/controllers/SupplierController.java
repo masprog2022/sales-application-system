@@ -26,7 +26,7 @@ public class SupplierController {
             tags = {"Fornecedor"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = UserDTO.class))
+                            content = @Content(schema = @Schema(implementation = SupplierDTO.class))
                     ),
                     @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),

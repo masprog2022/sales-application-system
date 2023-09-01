@@ -1,9 +1,7 @@
 package com.masprogtechs.sales.application.system.domain.entities.dto.stock;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.masprogtechs.sales.application.system.deserializer.LocalDateTimeDeserializer;
-import com.masprogtechs.sales.application.system.domain.entities.Product;
 import com.masprogtechs.sales.application.system.domain.entities.dto.product.ProductResponseDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.user.UserReducedDTO;
 import lombok.Data;

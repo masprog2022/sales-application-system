@@ -29,7 +29,7 @@ public class StockController {
             tags = {"Estoque"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = UserDTO.class))
+                            content = @Content(schema = @Schema(implementation = StockDTO.class))
                     ),
                     @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),

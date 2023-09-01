@@ -1,5 +1,6 @@
 package com.masprogtechs.sales.application.system.controllers;
 
+import com.masprogtechs.sales.application.system.domain.entities.dto.cash.CashReduceDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.cash.CashRequestDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.cash.CashResponseDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.user.UserDTO;
@@ -36,7 +37,7 @@ public class CashController {
             tags = {"Caixa"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = UserDTO.class))
+                            content = @Content(schema = @Schema(implementation = CashReduceDTO.class))
                     ),
                     @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),

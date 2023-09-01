@@ -29,8 +29,6 @@ public class Sale {
     private BigDecimal totalAmount;
     private BigDecimal AmountPaid;
     private BigDecimal difference;
-
-
     private Payment payment;
 
     @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL)
