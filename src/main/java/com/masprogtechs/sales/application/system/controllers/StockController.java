@@ -2,7 +2,7 @@ package com.masprogtechs.sales.application.system.controllers;
 
 
 import com.masprogtechs.sales.application.system.domain.entities.dto.stock.StockDTO;
-import com.masprogtechs.sales.application.system.domain.entities.dto.user.UserDTO;
+import com.masprogtechs.sales.application.system.domain.entities.dto.stock.user.UserDTO;
 import com.masprogtechs.sales.application.system.services.StockService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

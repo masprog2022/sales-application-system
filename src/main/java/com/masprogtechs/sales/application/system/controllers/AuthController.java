@@ -4,7 +4,7 @@ import com.masprogtechs.sales.application.system.domain.entities.User;
 import com.masprogtechs.sales.application.system.domain.repositories.UserRepository;
 import com.masprogtechs.sales.application.system.domain.entities.dto.auth.AuthRequestDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.auth.AuthResponseDTO;
-import com.masprogtechs.sales.application.system.domain.entities.dto.user.UserDTO;
+import com.masprogtechs.sales.application.system.domain.entities.dto.stock.user.UserDTO;
 import com.masprogtechs.sales.application.system.security.TokenService;
 import com.masprogtechs.sales.application.system.services.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
