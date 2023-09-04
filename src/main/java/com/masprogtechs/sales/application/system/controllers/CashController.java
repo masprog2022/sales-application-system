@@ -1,5 +1,6 @@
 package com.masprogtechs.sales.application.system.controllers;
 
+import com.masprogtechs.sales.application.system.domain.entities.dto.cash.CashClosedRequestDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.cash.CashReduceDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.cash.CashRequestDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.cash.CashResponseDTO;
@@ -15,10 +16,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/cash")
@@ -54,4 +52,31 @@ public class CashController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found: " + e.getMessage());
         }
     }
+
+    @PostMapping("/close")
+    @Operation(summary = "Fecho de caixa", description = "Fecho de caixa",
+            tags = {"Caixa"},
+            responses = {
+                    @ApiResponse(description = "Success", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = CashClosedRequestDTO.class))
+                    ),
+                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
+            })
+    public ResponseEntity<?> closeCash(@RequestBody CashClosedRequestDTO cashClosedRequestDTO) {
+        try {
+            CashResponseDTO cash = cashService.closeCash(cashClosedRequestDTO);
+            return ResponseEntity.ok(cash);
+        } catch (UnauthorizedException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Unauthorized: " + e.getMessage());
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found: " + e.getMessage());
+        }
+    }
+
+
+
 }
