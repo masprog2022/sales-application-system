@@ -30,12 +30,12 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/users").permitAll()
                         .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/users").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/v1/categories", "/api/v1/products",
-                                "/api/v1/supplier", "/api/v1/stocks", "/api/v1/cash/**", "api/v1/sales")
-                        .hasAnyRole("ADMIN","OPERATOR")
+                                "/api/v1/supplier", "/api/v1/stocks").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/cash/**", "api/v1/sales").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
