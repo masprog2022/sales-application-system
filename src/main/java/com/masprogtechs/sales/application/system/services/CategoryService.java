@@ -6,7 +6,9 @@ import com.masprogtechs.sales.application.system.domain.repositories.CategoryRep
 import com.masprogtechs.sales.application.system.domain.repositories.UserRepository;
 import com.masprogtechs.sales.application.system.domain.entities.dto.category.CategoryDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.user.UserReducedDTO;
+import com.masprogtechs.sales.application.system.exception.AuthorizationException;
 import com.masprogtechs.sales.application.system.exception.UnauthorizedAccessException;
+import com.masprogtechs.sales.application.system.exception.UnauthorizedCategoryAccessException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -38,7 +40,7 @@ public class CategoryService {
 
             User registeredBy = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 
-            List<String> allowedRoles = Arrays.asList("ADMIN", "OPERATOR");
+            List<String> allowedRoles = Arrays.asList("ADMIN", "MANAGER");
 
             if (registeredBy != null && allowedRoles.contains(registeredBy.getRole().name())) {
                 Category category = modelMapper.map(categoryDTO, Category.class);
@@ -53,7 +55,7 @@ public class CategoryService {
 
                 return modelMapper.map(savedCategory, CategoryDTO.class);
             } else {
-                throw new UnauthorizedAccessException("User is not authorized to register a product.");
+                throw new AuthorizationException("O usuário não está autorizado a registrar uma categoria.");
             }
         } else {
             throw new AuthenticationCredentialsNotFoundException("User is not authenticated.");
