@@ -1,0 +1,2 @@
+INSERT INTO tb_user (name, username, email, phone, password, role)
+VALUES("Mauro Manuel", "masprog", "mauro.manuel@unitel.co.ao", "922300919", "$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG", 0)
