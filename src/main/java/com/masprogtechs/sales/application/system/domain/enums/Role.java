@@ -5,6 +5,7 @@ import lombok.Data;
 
 public enum Role {
     ADMIN("ADMIN"),
+    MANAGER("MANAGER"),
     OPERATOR("OPERATOR");
 
     Role(String role) {
