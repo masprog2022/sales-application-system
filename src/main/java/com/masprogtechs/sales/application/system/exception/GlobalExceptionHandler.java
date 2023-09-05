@@ -39,5 +39,17 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleIllegalStateError(IllegalStateErrorException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<Object> handleAuthorizationException(AuthorizationException ex, WebRequest request) {
+        StandardError error = new StandardError(
+                HttpStatus.UNAUTHORIZED.value(),
+                "Unauthorized",
+                ex.getMessage(),
+                request.getDescription(false),
+                Instant.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+    }
+
 
 }
