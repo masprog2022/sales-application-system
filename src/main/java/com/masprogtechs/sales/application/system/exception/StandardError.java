@@ -7,28 +7,28 @@ public class StandardError {
 
     private static final long serialVersionUID = 1L;
 
-    private Instant timestamp;
-    private Integer status;
+    private int status;
     private String error;
     private String message;
     private String path;
+    private Instant timestamp;
 
-    public StandardError() {
-    }
 
-    public Instant getTimestamp() {
-        return timestamp;
-    }
+    public StandardError(){}
 
-    public void setTimestamp(Instant timestamp) {
+    public StandardError(int status, String error, String message, String path, Instant timestamp) {
+        this.status = status;
+        this.error = error;
+        this.message = message;
+        this.path = path;
         this.timestamp = timestamp;
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -54,5 +54,13 @@ public class StandardError {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public Instant getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Instant timestamp) {
+        this.timestamp = timestamp;
     }
 }
