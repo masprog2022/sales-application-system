@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -88,7 +89,27 @@ public class SaleController {
                 .orElseThrow(() -> new ResourceNotFoundException("Venda não encontrada"));
         return ResponseEntity.ok().body(saleResponseDTO);
     }
-
+    @DeleteMapping("{id}")
+    @Operation(summary = "Deletar uma venda pelo ID", description = "Deletar uma venda pelo ID",
+            tags = {"Venda"},
+            responses = {
+                    @ApiResponse(description = "Success", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = SaleRequestDTO.class))
+                    ),
+                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
+            })
+     public Map<String, Boolean> deleteById(@PathVariable Long id){
+         SaleResponseDTO saleRequestDTO = saleService.findByIdSales(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Venda não encontrada"));
+        saleService.delete(saleRequestDTO);
+         Map<String, Boolean> response = new HashMap<>();
+         response.put("deleted", Boolean.TRUE);
+         return response;
+     }
 
 
 }
