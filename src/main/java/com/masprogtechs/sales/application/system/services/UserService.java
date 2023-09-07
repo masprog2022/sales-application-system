@@ -62,7 +62,7 @@ public class UserService {
         // Verifique se o usuário autenticado tem a função "Admin"
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getAuthorities().stream().noneMatch(role -> role.getAuthority().equals("ROLE_ADMIN"))) {
-            throw new AuthorizationException("O usuário não está autorizado a ver a lista de usuário..");
+            throw new AuthorizationException("O usuário não está autorizado a ver a lista de usuário.");
         }
 
         Page<User> userPage = userRepository.findAll(pageable);

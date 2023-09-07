@@ -10,6 +10,7 @@ import com.masprogtechs.sales.application.system.domain.repositories.SupplierRep
 import com.masprogtechs.sales.application.system.domain.repositories.UserRepository;
 import com.masprogtechs.sales.application.system.domain.entities.dto.product.ProductDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.user.UserReducedDTO;
+import com.masprogtechs.sales.application.system.exception.AuthorizationException;
 import com.masprogtechs.sales.application.system.exception.UnauthorizedAccessException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class ProductService {
 
             User registeredBy = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 
-            List<String> allowedRoles = Arrays.asList("ADMIN", "OPERATOR");
+            List<String> allowedRoles = Arrays.asList("ADMIN", "MANAGER");
 
             if (registeredBy != null && allowedRoles.contains(registeredBy.getRole().name())) {
                 Product product = modelMapper.map(productDTO, Product.class);
@@ -69,7 +70,7 @@ public class ProductService {
 
                 return modelMapper.map(savedProduct, ProductDTO.class);
             } else {
-                throw new UnauthorizedAccessException("User is not authorized to register a product.");
+                throw new AuthorizationException("O usuário não está autorizado para registar produto.");
             }
         } else {
             throw new AuthenticationCredentialsNotFoundException("User is not authenticated.");

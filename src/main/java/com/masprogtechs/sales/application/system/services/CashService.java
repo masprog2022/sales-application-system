@@ -8,6 +8,7 @@ import com.masprogtechs.sales.application.system.domain.entities.dto.cash.CashRe
 import com.masprogtechs.sales.application.system.domain.entities.dto.cash.CashResponseDTO;
 import com.masprogtechs.sales.application.system.domain.repositories.CashRepository;
 import com.masprogtechs.sales.application.system.domain.repositories.UserRepository;
+import com.masprogtechs.sales.application.system.exception.AuthorizationException;
 import com.masprogtechs.sales.application.system.exception.CashNotFoundException;
 import com.masprogtechs.sales.application.system.exception.IllegalStateErrorException;
 import com.masprogtechs.sales.application.system.exception.UnauthorizedException;
@@ -86,7 +87,7 @@ public class CashService {
                 // Verifique se o usuário autenticado é o mesmo que abriu o caixa
                 User openedBy = cashToClose.getRegisteredBy();
                 if(!registeredBy.equals(openedBy)){
-                    throw new UnauthorizedException("Somente o usuário que abriu o caixa pode fechá-lo");
+                    throw new AuthorizationException("Somente o usuário que abriu o caixa pode fechá-lo");
                 }
 
 
@@ -106,7 +107,7 @@ public class CashService {
 
         return modelMapper.map(cashClosed, CashResponseDTO.class);
             } else {
-                throw new UnauthorizedException("User is not authorized to open cash.");
+                throw new AuthorizationException("User is not authorized to open cash.");
             }
         } else {
             throw new AuthenticationCredentialsNotFoundException("User is not authenticated.");

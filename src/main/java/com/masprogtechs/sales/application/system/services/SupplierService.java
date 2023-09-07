@@ -5,6 +5,7 @@ import com.masprogtechs.sales.application.system.domain.entities.User;
 import com.masprogtechs.sales.application.system.domain.repositories.SupplierRepository;
 import com.masprogtechs.sales.application.system.domain.repositories.UserRepository;
 import com.masprogtechs.sales.application.system.domain.entities.dto.supplier.SupplierDTO;
+import com.masprogtechs.sales.application.system.exception.AuthorizationException;
 import com.masprogtechs.sales.application.system.exception.UnauthorizedAccessException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class SupplierService {
 
                 User registeredBy = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 
-                List<String> allowedRoles = Arrays.asList("ADMIN", "OPERATOR");
+                List<String> allowedRoles = Arrays.asList("ADMIN", "MANAGER");
 
                 if (registeredBy != null && allowedRoles.contains(registeredBy.getRole().name())) {
                     Supplier supplier = modelMapper.map(supplierDTO, Supplier.class);
@@ -46,10 +47,10 @@ public class SupplierService {
 
                     return modelMapper.map(savedSupplier, SupplierDTO.class);
                 } else {
-                    throw new UnauthorizedAccessException("User is not authorized to register a product.");
+                    throw new AuthorizationException("O usuário não está autorizado para registar fornecedor.");
                 }
             } else {
-                throw new AuthenticationCredentialsNotFoundException("User is not authenticated.");
+                throw new AuthenticationCredentialsNotFoundException("Usuário não esta autenticado.");
             }
         }
 }

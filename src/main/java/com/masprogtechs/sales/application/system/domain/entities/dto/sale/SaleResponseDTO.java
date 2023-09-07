@@ -2,6 +2,7 @@ package com.masprogtechs.sales.application.system.domain.entities.dto.sale;
 
 
 import com.masprogtechs.sales.application.system.domain.entities.Cash;
+import com.masprogtechs.sales.application.system.domain.entities.Sale;
 import com.masprogtechs.sales.application.system.domain.entities.dto.cash.CashReduceDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.saleItem.SaleItemResponseDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.user.UserReducedDTO;
@@ -39,6 +40,8 @@ public class SaleResponseDTO {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
+
+
 
 
 
