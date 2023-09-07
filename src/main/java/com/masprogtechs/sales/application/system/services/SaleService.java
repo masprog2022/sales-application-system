@@ -7,6 +7,7 @@ import com.masprogtechs.sales.application.system.domain.entities.dto.category.Ca
 import com.masprogtechs.sales.application.system.domain.entities.dto.sale.SaleRequestDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.sale.SaleResponseDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.saleItem.SaleItemRequestDTO;
+import com.masprogtechs.sales.application.system.domain.entities.dto.stock.StockDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.user.UserReducedDTO;
 import com.masprogtechs.sales.application.system.domain.repositories.SaleRepository;
 import com.masprogtechs.sales.application.system.domain.repositories.StockRepository;
@@ -27,6 +28,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -128,7 +130,7 @@ public class SaleService {
                             .collect(Collectors.toList());
                 } else if (userRole.equals("OPERATOR")) {
                     // Operators podem ver apenas as vendas atribuídas a eles
-                    List<Sale> operatorSales = saleRepository.findByregisteredBy(registeredBy);
+                    List<Sale> operatorSales = saleRepository.findByRegisteredBy(registeredBy);
                     return operatorSales.stream()
                             .map(sale -> modelMapper.map(sale, SaleResponseDTO.class))
                             .collect(Collectors.toList());
@@ -140,4 +142,37 @@ public class SaleService {
             throw new AuthenticationCredentialsNotFoundException("Usuário não está autenticado.");
         }
     }
+
+    public Optional<SaleResponseDTO> findByIdSales(Long id) {
+        if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            User currentUser = userRepository.findByUsername(username);
+
+            if (currentUser != null) {
+                String userRole = currentUser.getRole().name();
+
+                // Permitir que ADMIN e MANAGER vejam vendas de qualquer pessoa por ID
+                if ("ADMIN".equals(userRole) || "MANAGER".equals(userRole)) {
+                    return saleRepository.findById(id)
+                            .map(sale -> modelMapper.map(sale, SaleResponseDTO.class));
+                }
+
+                // Permitir que Operator veja apenas suas próprias vendas por ID
+                if ("OPERATOR".equals(userRole)) {
+                    return saleRepository.findByIdAndRegisteredById(id, currentUser.getId())
+                            .map(sale -> modelMapper.map(sale, SaleResponseDTO.class));
+                }
+            }
+
+            throw new AuthorizationException("O usuário não está autorizado a buscar vendas por ID.");
+        } else {
+            throw new AuthenticationCredentialsNotFoundException("Usuário não está autenticado.");
+        }
+    }
+    public void delete(SaleRequestDTO saleRequestDTO){
+        Sale sale = modelMapper.map(saleRequestDTO, Sale.class);
+        saleRepository.delete(sale);
+    }
+
+
 }
