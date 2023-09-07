@@ -11,12 +11,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/sales")
@@ -44,11 +45,28 @@ public class SaleController {
             SaleResponseDTO response = saleService.createSale(saleRequestDTO);
             return ResponseEntity.ok(response);
         } catch (InsufficientStockException e) {
-            ErrorDTO errorDTO = new ErrorDTO("Insufficient stock for some items.");
+            ErrorDTO errorDTO = new ErrorDTO("Estoque insuficiente para efectuar a venda.");
             return ResponseEntity.badRequest().body(errorDTO);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    @GetMapping
+    @Operation(summary = "Listar todas as venda", description = "Listar todas as venda",
+            tags = {"Venda"},
+            responses = {
+                    @ApiResponse(description = "Success", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = SaleResponseDTO.class))
+                    ),
+                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
+            })
+    public List<SaleResponseDTO> findAllSales() {
+        return saleService.getAllSales();
     }
 
 
