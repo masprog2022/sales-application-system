@@ -115,23 +115,29 @@ public class SaleService {
 
     public List<SaleResponseDTO> getAllSales() {
         if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
-
             User registeredBy = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 
-            List<String> allowedRoles = Arrays.asList("ADMIN", "MANAGER");
+            if (registeredBy != null) {
+                String userRole = registeredBy.getRole().name();
 
-            if (registeredBy != null && allowedRoles.contains(registeredBy.getRole().name())) {
-
-                List<Sale> sales = saleRepository.findAll();
-                return sales.stream()
-                        .map(sale -> modelMapper.map(sale, SaleResponseDTO.class))
-                        .collect(Collectors.toList());
-
-            } else {
-                throw new AuthorizationException("O usuário não está autorizado a listar vendas.");
+                if (userRole.equals("ADMIN") || userRole.equals("MANAGER")) {
+                    // Admins e Managers podem ver todas as vendas
+                    List<Sale> sales = saleRepository.findAll();
+                    return sales.stream()
+                            .map(sale -> modelMapper.map(sale, SaleResponseDTO.class))
+                            .collect(Collectors.toList());
+                } else if (userRole.equals("OPERATOR")) {
+                    // Operators podem ver apenas as vendas atribuídas a eles
+                    List<Sale> operatorSales = saleRepository.findByregisteredBy(registeredBy);
+                    return operatorSales.stream()
+                            .map(sale -> modelMapper.map(sale, SaleResponseDTO.class))
+                            .collect(Collectors.toList());
+                }
             }
+
+            throw new AuthorizationException("O usuário não está autorizado a listar vendas.");
         } else {
-            throw new AuthenticationCredentialsNotFoundException("Usuário não esta autenticado.");
+            throw new AuthenticationCredentialsNotFoundException("Usuário não está autenticado.");
         }
     }
 }
