@@ -4,6 +4,7 @@ import com.masprogtechs.sales.application.system.domain.entities.dto.error.Error
 import com.masprogtechs.sales.application.system.domain.entities.dto.sale.SaleRequestDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.sale.SaleResponseDTO;
 import com.masprogtechs.sales.application.system.exception.InsufficientStockException;
+import com.masprogtechs.sales.application.system.exception.ResourceNotFoundException;
 import com.masprogtechs.sales.application.system.services.SaleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/sales")
@@ -68,6 +70,25 @@ public class SaleController {
     public List<SaleResponseDTO> findAllSales() {
         return saleService.getAllSales();
     }
+    @GetMapping("{id}")
+    @Operation(summary = "Buscar venda por ID", description = "Buscar venda por ID",
+            tags = {"Venda"},
+            responses = {
+                    @ApiResponse(description = "Success", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = SaleResponseDTO.class))
+                    ),
+                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
+            })
+    public ResponseEntity<SaleResponseDTO> findSalesById(@PathVariable Long id) throws ResourceNotFoundException {
+        SaleResponseDTO saleResponseDTO = saleService.findByIdSales(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Venda não encontrada"));
+        return ResponseEntity.ok().body(saleResponseDTO);
+    }
+
 
 
 }
