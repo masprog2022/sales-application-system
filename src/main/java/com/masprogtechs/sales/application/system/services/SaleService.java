@@ -1,25 +1,22 @@
 package com.masprogtechs.sales.application.system.services;
 
 
-import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.masprogtechs.sales.application.system.domain.entities.*;
-import com.masprogtechs.sales.application.system.domain.entities.dto.category.CategoryDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.sale.SaleRequestDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.sale.SaleResponseDTO;
 import com.masprogtechs.sales.application.system.domain.entities.dto.saleItem.SaleItemRequestDTO;
-import com.masprogtechs.sales.application.system.domain.entities.dto.stock.StockDTO;
-import com.masprogtechs.sales.application.system.domain.entities.dto.user.UserReducedDTO;
+import com.masprogtechs.sales.application.system.domain.repositories.SaleItemRepository;
 import com.masprogtechs.sales.application.system.domain.repositories.SaleRepository;
 import com.masprogtechs.sales.application.system.domain.repositories.StockRepository;
 import com.masprogtechs.sales.application.system.domain.repositories.UserRepository;
 import com.masprogtechs.sales.application.system.exception.AuthorizationException;
 import com.masprogtechs.sales.application.system.exception.InsufficientStockException;
-import com.masprogtechs.sales.application.system.exception.UnauthorizedAccessException;
+import com.masprogtechs.sales.application.system.exception.ResourceNotFoundException;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +33,9 @@ public class SaleService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private SaleItemRepository saleItemRepository;
 
     @Autowired
     private SaleRepository saleRepository;
@@ -169,9 +169,28 @@ public class SaleService {
             throw new AuthenticationCredentialsNotFoundException("Usuário não está autenticado.");
         }
     }
-    public void delete(SaleRequestDTO saleRequestDTO){
+    @Transactional
+    public void delete(SaleResponseDTO saleRequestDTO){
+
+        // Verifique se o usuário autenticado tem a função "Admin"
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getAuthorities().stream().noneMatch(role -> role.getAuthority().equals("ROLE_ADMIN"))) {
+            throw new AuthorizationException("O usuário não está autorizado a deletar uma venda .");
+        }
+
+
         Sale sale = modelMapper.map(saleRequestDTO, Sale.class);
-        saleRepository.delete(sale);
+
+        if(saleRepository.existsById(sale.getId())){
+
+            saleItemRepository.deleteBySaleId(sale.getId());
+
+            saleRepository.delete(sale);
+        } else {
+            throw new ResourceNotFoundException("Venda não encontrada");
+        }
+
+
     }
 
 
